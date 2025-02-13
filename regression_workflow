@@ -1,0 +1,18 @@
+digraph {
+	A [label="FVT team submits regression request (JSON data) in webpage" color=lightblue shape=parallelogram style=filled]
+	B [label="Email is generated and sent to lab team with link to webpage" color=gray shape=box style=filled]
+	C [label="Lab team submits star link in webpage" color=lightblue shape=parallelogram style=filled]
+	D [label="Web scraping is done to extract command lines from page" color=gray shape=box style=filled]
+	E [label="Command lines are checked for mismatches" color=yellow shape=diamond style=filled]
+	F [label="If mismatches found: 
+- Email is sent listing mismatched fields 
+- Mismatches displayed on UI" color=green shape=box style=filled]
+	G [label="If no mismatches: 
+- Success message displayed" color=green shape=box style=filled]
+	A -> B
+	B -> C
+	C -> D
+	D -> E
+	E -> F [label=Mismatches]
+	E -> G [label="No Mismatches"]
+}
