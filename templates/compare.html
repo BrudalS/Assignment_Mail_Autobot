@@ -1,72 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compare Regression Data</title>
+    <title>SanDisk Regression Request Systems</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        .container {
-            width: 50%;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            box-shadow: 0px 0px 10px 0px gray;
-            border-radius: 10px;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #007bff;
+            font-size: 12px;
+            margin: 0;
+            padding: 0;
+            background-image: url('istockphoto-1435226158-2048x2048.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 90%;
+        }
+
+        .header img {
+            height: 40px;
+        }
+
+        .header h2 {
+            color: white;
+            margin: 0;
+            font-size: 18px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            flex: 1;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 50%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            font-size: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            border: 1px solid #ccc;
             padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+            padding: 8px;
+            font-size: 12px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
             border: none;
             cursor: pointer;
+            font-size: 14px;
             border-radius: 5px;
-            width: 100%;
+            margin: 20px auto;
+            display: block;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
+        }
+
+        .thank-you-message {
+            display: none;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: green;
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Compare Data</h2>
-    <label>Enter Input Value:</label>
-    <input type="text" id="inputValue">
-    
-    <button onclick="compareData()">Compare</button>
-    
-    <p id="result"></p>
-</div>
+    <div class="header">
+        <img src="" alt="SanDisk Logo">
+        <h2>SanDisk Regression Request Systems</h2>
+    </div>
 
-<script>
-function compareData() {
-    let inputValue = document.getElementById('inputValue').value;
+    <form id="singleInputForm">
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Input</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Enter Value</td>
+                        <td><textarea id="inputData" placeholder="Enter values in format: --key=value --key2=value2"></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
 
-    fetch('/compare', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ inputValue: inputValue })
-    })
-    .then(response => response.json())
-    .then(result => {
-        document.getElementById('result').innerText = result.result;
-    })
-    .catch(error => console.error('Error:', error));
-}
-</script>
+    <div id="thankYouMessage" class="thank-you-message">Thank you! Your response has been submitted.</div>
+
+    <script>
+        function submitForm() {
+            let inputText = document.getElementById('inputData').value;
+
+            fetch('/compare', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ inputData: inputText })
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('thankYouMessage').style.display = "block";
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 
 </body>
 </html>
